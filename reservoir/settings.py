@@ -25,7 +25,9 @@ SECRET_KEY = 'vq&@3f0p%&+mcd5(sqahdkc0h)*b0got9%(8_yby)g!%7w@%d_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'reservoir-tw.herokuapp.com'
+]
 
 
 # Application definition
