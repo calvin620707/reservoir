@@ -2,3 +2,4 @@ django
 gunicorn
 social-auth-app-django
 dj-database-url
+psycopg2
