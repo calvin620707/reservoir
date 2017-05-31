@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
-    'sheets.apps.SheetsConfig',
-    'accounts.apps.AccountsConfig'
+    'sheets',
+    'accounts'
 ]
 
 MIDDLEWARE = [

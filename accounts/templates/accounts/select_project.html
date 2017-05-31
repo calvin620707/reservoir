@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Current Project</title>
+</head>
+<body>
+<a href="{% url 'my-new-project' %}">Create New Project</a>
+<form action="{% url 'my-current-project' %}" method="post">
+    {% csrf_token %}
+    {% for project in projects %}
+        <input type="radio" name="project" id="project{{ forloop.counter }}" value="{{ project.id }}"/>
+        <label for="project{{ forloop.counter }}">{{ project.name }}</label><br/>
+    {% endfor %}
+    <input type="submit" value="Select"/>
+</form>
+</body>
+</html>
