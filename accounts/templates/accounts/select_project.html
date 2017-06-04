@@ -8,7 +8,7 @@
 <a href="{% url 'my-new-project' %}">Create New Project</a>
 <form action="{% url 'my-current-project' %}" method="post">
     {% csrf_token %}
-    {% for project in projects %}
+    {% for project in object_list %}
         <input type="radio" name="project" id="project{{ forloop.counter }}" value="{{ project.id }}"/>
         <label for="project{{ forloop.counter }}">{{ project.name }}</label><br/>
     {% endfor %}

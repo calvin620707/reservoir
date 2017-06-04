@@ -1,14 +1,13 @@
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from accounts.models import Project
 
 
-class MyProjectsView(View):
-    def get(self, request):
-        projects = request.user.project_set.all()
-        return render(request, 'accounts/select_project.html', context={'projects': projects})
+class MyProjectsView(ListView):
+    model = Project
+    template_name = 'accounts/select_project.html'
 
 
 class MyNewProjectView(View):
