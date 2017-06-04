@@ -1,4 +1,5 @@
-from django.forms import ModelForm
+import logging
+from django import forms
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -7,16 +8,26 @@ from django.views.generic import CreateView, ListView
 
 from accounts.models import Project
 
+logger = logging.getLogger()
+
 
 class MyProjectsView(ListView):
     model = Project
     template_name = 'accounts/select_project.html'
 
 
-class CreateNewProjectForm(ModelForm):
+class CreateNewProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['name']
+        fields = ['name', 'description', 'start_date', 'end_date']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        logger.debug(cleaned_data)
+        e_date = cleaned_data.get('end_date')
+        s_date = cleaned_data.get('start_date')
+        if (e_date and s_date) and (e_date < s_date):
+            raise forms.ValidationError("End date should be greater than start date.")
 
 
 class MyNewProjectView(View):
@@ -28,6 +39,8 @@ class MyNewProjectView(View):
             proj.members.add(request.user)
             proj.save()
             return HttpResponseRedirect(reverse('my-projects'))
+
+        return render(request, 'accounts/create_new_project.html', {'form': form})
 
     def get(self, request):
         form = CreateNewProjectForm()
