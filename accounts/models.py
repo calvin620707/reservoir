@@ -8,6 +8,9 @@ class Project(Model):
     members = ManyToManyField(settings.AUTH_USER_MODEL)
     created_at = DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return "{} {}".format(self.created_at.strftime("%c"), self.name)
+
 
 class User(AbstractUser):
     current_project = ForeignKey(Project, on_delete=SET_NULL, null=True)
