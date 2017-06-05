@@ -8,7 +8,7 @@ class CostRecord(models.Model):
     calculated = models.BooleanField(default=False, db_index=True)
     name = models.CharField(max_length=30)
     cost = models.FloatField(blank=False, null=False)
-    datetime = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now)
     comment = models.TextField(blank=True)
 
     class Meta:
