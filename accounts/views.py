@@ -1,10 +1,11 @@
 import logging
+
 from django import forms
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View
-from django.views.generic import CreateView, ListView
+from django.views.generic import ListView, UpdateView
 
 from accounts.models import Project
 
@@ -23,7 +24,6 @@ class CreateNewProjectForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        logger.debug(cleaned_data)
         e_date = cleaned_data.get('end_date')
         s_date = cleaned_data.get('start_date')
         if (e_date and s_date) and (e_date < s_date):
@@ -38,6 +38,9 @@ class MyNewProjectView(View):
             proj.save()
             proj.members.add(request.user)
             proj.save()
+
+            request.user.current_project = proj
+            request.user.save()
             return HttpResponseRedirect(reverse('my-projects'))
 
         return render(request, 'accounts/create_new_project.html', {'form': form})
@@ -47,7 +50,15 @@ class MyNewProjectView(View):
         return render(request, 'accounts/create_new_project.html', {'form': form})
 
 
-class MyCurrentProjectView(CreateView):
+class MyProjectUpdateView(UpdateView):
     model = Project
-    fields = ['name', 'members']
-    template_name = 'accounts/create_new_project.html'
+    fields = ['name', 'description', 'start_date', 'end_date', 'members']
+    template_name = 'accounts/update_project.html'
+
+    def get_success_url(self):
+        return reverse('sheets-add-costs')
+
+
+class MyCurrentProjectView(View):
+    def get(self, request):
+        return HttpResponseRedirect(reverse('update-my-project', args=[request.user.current_project.id]))

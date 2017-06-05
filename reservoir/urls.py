@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 
-from accounts.views import MyProjectsView, MyCurrentProjectView, MyNewProjectView
+from accounts.views import MyProjectsView, MyCurrentProjectView, MyNewProjectView, MyProjectUpdateView
 from sheets import views as sheets_views
 
 urlpatterns = [
@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^my/projects$', login_required(MyProjectsView.as_view()), name='my-projects'),
     url(r'^my/new/project', login_required(MyNewProjectView.as_view()), name="my-new-project"),
     url(r'^my/projects/current$', login_required(MyCurrentProjectView.as_view()), name='my-current-project'),
+    url(r'^my/projects/(?P<pk>[0-9]+)', login_required(MyProjectUpdateView.as_view()), name='update-my-project'),
     url(r'^admin/', admin.site.urls)
 ]
