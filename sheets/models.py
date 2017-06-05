@@ -11,8 +11,27 @@ class CostRecord(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     comment = models.TextField(blank=True)
 
-    class Meta:
-        indexes = [
-            models.Index(fields=['project', 'payer']),
-            models.Index(fields=['project', 'payer', 'calculated']),
-        ]
+    FOOD = 'FO'
+    CLOTHING = 'CL'
+    HOUSING = 'HO'
+    TRANSPORTATION = 'TR'
+    EDUCATION = 'ED'
+    ENTERTAINMENT = 'EN'
+    OTHERS = 'OT'
+    CATEGORY_CHOICES = (
+        (FOOD, 'Food'),
+        (CLOTHING, 'Clothing'),
+        (HOUSING, 'Housing'),
+        (TRANSPORTATION, 'Transportation'),
+        (EDUCATION, 'Education'),
+        (ENTERTAINMENT, 'Entertainment'),
+        (OTHERS, 'Others')
+    )
+    category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=OTHERS, db_index=True)
+
+
+class Meta:
+    indexes = [
+        models.Index(fields=['project', 'payer']),
+        models.Index(fields=['project', 'payer', 'calculated']),
+    ]
