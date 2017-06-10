@@ -8,7 +8,7 @@ class CostRecord(models.Model):
     payer = models.ForeignKey('accounts.User', on_delete=models.CASCADE, db_index=True)
     calculated = models.BooleanField(default=False, db_index=True)
     name = models.CharField(max_length=30)
-    cost = models.FloatField(blank=False, null=False)
+    cost = models.FloatField()
     created_at = models.DateTimeField(default=timezone.now)
     comment = models.TextField(blank=True)
 
