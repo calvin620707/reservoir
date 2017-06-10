@@ -60,5 +60,8 @@ class MyProjectUpdateView(UpdateView):
 
 
 class MyCurrentProjectView(View):
-    def get(self, request):
-        return HttpResponseRedirect(reverse('update-my-project', args=[request.user.current_project.id]))
+    def post(self, request):
+        """Set user's current project"""
+        request.user.current_project = request.POST['project_id']
+
+        return HttpResponseRedirect(reverse('sheets-add-costs'))

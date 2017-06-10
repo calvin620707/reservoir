@@ -9,7 +9,7 @@
 <form action="{% url 'my-current-project' %}" method="post">
     {% csrf_token %}
     {% for project in object_list %}
-        <input type="radio" name="project" id="project{{ forloop.counter }}" value="{{ project.id }}"/>
+        <input type="radio" name="project_id" id="project{{ forloop.counter }}" value="{{ project.id }}"/>
         <label for="project{{ forloop.counter }}">{{ project.name }}</label><br/>
     {% endfor %}
     <input type="submit" value="Select"/>
