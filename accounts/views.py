@@ -2,7 +2,7 @@ import logging
 
 from django import forms
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, UpdateView
@@ -62,6 +62,6 @@ class MyProjectUpdateView(UpdateView):
 class MyCurrentProjectView(View):
     def post(self, request):
         """Set user's current project"""
-        request.user.current_project = request.POST['project_id']
+        request.user.current_project = get_object_or_404(Project, id=request.POST['project_id'])
 
         return HttpResponseRedirect(reverse('sheets-add-costs'))
