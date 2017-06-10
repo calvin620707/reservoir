@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 
 
@@ -29,9 +30,11 @@ class CostRecord(models.Model):
     )
     category = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=OTHERS, db_index=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['project', 'payer']),
+            models.Index(fields=['project', 'payer', 'calculated']),
+        ]
 
-class Meta:
-    indexes = [
-        models.Index(fields=['project', 'payer']),
-        models.Index(fields=['project', 'payer', 'calculated']),
-    ]
+    def get_absolute_url(self):
+        return reverse('sheets:cost-details', kwargs={'pk': self.pk})

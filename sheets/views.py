@@ -1,11 +1,17 @@
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
+from django.views.generic import CreateView, DetailView
+
+from sheets.models import CostRecord
 
 
-@login_required
-def add_costs(request):
-    if not request.user.current_project:
-        return HttpResponseRedirect(reverse('my-projects'))
-    return render(request, 'sheets/add_costs.html')
+class CostDetailView(DetailView):
+    model = CostRecord
+
+
+class AddCostView(CreateView):
+    model = CostRecord
+    fields = ['name', 'cost', 'category', 'created_at', 'comment']
+
+    def form_valid(self, form):
+        form.instance.project = self.request.user.current_project
+        form.instance.payer = self.request.user
+        return super().form_valid(form)

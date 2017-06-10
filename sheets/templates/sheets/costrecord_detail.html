@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cost Details</title>
+</head>
+<body>
+Name: {{ object.name }}<br/>
+Cost: {{ object.cost }}<br/>
+Category: {{ object.get_category_display }}<br/>
+Comment: {{ object.comment }}<br/>
+Project: {{ object.project.name }}<br/>
+Payer: {{ object.payer }}<br/>
+Calculated: {{ object.calculated }}<br/>
+Created at: {{ object.created_at }}<br/>
+</body>
+</html>

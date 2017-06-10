@@ -19,10 +19,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 
 from accounts.views import MyProjectsView, MyCurrentProjectView, MyNewProjectView, MyProjectUpdateView
-from sheets import views as sheets_views
+from sheets.views import AddCostView
 
 urlpatterns = [
-    url(r'^$', sheets_views.add_costs, name='sheets-add-costs'),
+    url(r'^$', login_required(AddCostView.as_view()), name='sheets-add-costs'),
     url(r'^login$', LoginView.as_view(), name='login'),
     url(r'^logout$', LogoutView.as_view(), name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^my/new/project', login_required(MyNewProjectView.as_view()), name="my-new-project"),
     url(r'^my/projects/current$', login_required(MyCurrentProjectView.as_view()), name='my-current-project'),
     url(r'^my/projects/(?P<pk>[0-9]+)', login_required(MyProjectUpdateView.as_view()), name='update-my-project'),
-    url(r'^admin/', admin.site.urls)
+    url(r'^sheets/', include('sheets.urls')),
+    url(r'^admin/', admin.site.urls),
 ]
