@@ -15,7 +15,7 @@ class AddCostView(CreateView):
 
     def get(self, request, *args, **kwargs):
         if not request.user.current_project:
-            return HttpResponseRedirect(reverse('my-projects'))
+            return HttpResponseRedirect(reverse('accounts:my-projects'))
 
         return super().get(request, *args, **kwargs)
 

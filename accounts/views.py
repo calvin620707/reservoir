@@ -41,7 +41,7 @@ class MyNewProjectView(View):
 
             request.user.current_project = proj
             request.user.save()
-            return HttpResponseRedirect(reverse('my-projects'))
+            return HttpResponseRedirect(reverse('accounts:my-projects'))
 
         return render(request, 'accounts/create_new_project.html', {'form': form})
 
@@ -63,5 +63,6 @@ class MyCurrentProjectView(View):
     def post(self, request):
         """Set user's current project"""
         request.user.current_project = get_object_or_404(Project, id=request.POST['project_id'])
+        request.user.save()
 
         return HttpResponseRedirect(reverse('sheets-add-costs'))

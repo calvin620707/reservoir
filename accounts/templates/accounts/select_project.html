@@ -5,8 +5,8 @@
     <title>Select Current Project</title>
 </head>
 <body>
-<a href="{% url 'my-new-project' %}">Create New Project</a>
-<form action="{% url 'my-current-project' %}" method="post">
+<a href="{% url 'accounts:my-new-project' %}">Create New Project</a>
+<form action="{% url 'accounts:my-current-project' %}" method="post">
     {% csrf_token %}
     {% for project in object_list %}
         <input type="radio" name="project_id" id="project{{ forloop.counter }}" value="{{ project.id }}"/>

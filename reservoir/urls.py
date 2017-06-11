@@ -26,10 +26,7 @@ urlpatterns = [
     url(r'^login$', LoginView.as_view(), name='login'),
     url(r'^logout$', LogoutView.as_view(), name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
-    url(r'^my/projects$', login_required(MyProjectsView.as_view()), name='my-projects'),
-    url(r'^my/new/project', login_required(MyNewProjectView.as_view()), name="my-new-project"),
-    url(r'^my/projects/current$', login_required(MyCurrentProjectView.as_view()), name='my-current-project'),
-    url(r'^my/projects/(?P<pk>[0-9]+)', login_required(MyProjectUpdateView.as_view()), name='update-my-project'),
+    url(r'^accounts/', include('accounts.urls')),
     url(r'^sheets/', include('sheets.urls')),
     url(r'^admin/', admin.site.urls),
 ]
