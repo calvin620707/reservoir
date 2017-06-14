@@ -14,7 +14,9 @@ logger = logging.getLogger()
 
 class MyProjectsView(ListView):
     model = Project
-    template_name = 'accounts/select_project.html'
+
+    def get_queryset(self):
+        return self.request.user.project_set.all()
 
 
 class CreateNewProjectForm(forms.ModelForm):
@@ -56,7 +58,7 @@ class MyProjectUpdateView(UpdateView):
     template_name = 'accounts/update_project.html'
 
     def get_success_url(self):
-        return reverse('sheets-add-costs')
+        return reverse('sheets:add-costs')
 
 
 class ProjectDetailView(DetailView):
@@ -78,7 +80,7 @@ class MyCurrentProjectView(View):
         request.user.current_project = get_object_or_404(Project, id=request.POST['project_id'])
         request.user.save()
 
-        return HttpResponseRedirect(reverse('sheets-add-costs'))
+        return HttpResponseRedirect(reverse('sheets:add-costs'))
 
 
 class JoinProjectView(View):
