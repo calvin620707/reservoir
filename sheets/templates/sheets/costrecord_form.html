@@ -1,14 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Cost</title>
-</head>
-<body>
-<h1>Current Project: {{ request.user.current_project.name }}</h1>
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Add"/>
-</form>
-</body>
-</html>
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Add Cost</title>#}
+{#</head>#}
+{#<body>#}
+{#<h1>Current Project: {{ request.user.current_project.name }}</h1>#}
+{#<form action="" method="post">{% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Add"/>#}
+{#</form>#}
+{#</body>#}
+{#</html>#}
+
+{% extends "base.html" %}
+{% block title %}Add Cost{% endblock %}
+{% block content %}
+    <h1>Current Project: {{ request.user.current_project.name }}</h1>
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Add"/>
+    </form>
+{% endblock %}
