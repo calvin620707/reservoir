@@ -24,7 +24,7 @@
                 <td><a href="{% url 'accounts:update-my-project' pk=project.id %}">Edit</a></td>
                 <td><a href="{% url 'accounts:delete-my-project' pk=project.id %}">Delete</a></td>
                 <td><a>Calculate</a></td>
-                <td><a>Manage Costs</a></td>
+                <td><a href="{% url 'sheets:cost-list' %}">Manage Costs</a></td>
             </tr>
         {% endfor %}
     </table>

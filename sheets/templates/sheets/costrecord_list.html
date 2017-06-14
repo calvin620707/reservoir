@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Costs Management</title>
+</head>
+<body>
+<a href="{% url 'sheets:add-costs' %}">Add Cost</a>
+<table>
+    {% for cost in object_list %}
+        <tr>
+            <td>{{ cost.name }}</td>
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

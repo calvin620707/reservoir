@@ -1,12 +1,22 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, ListView
 
 from sheets.models import CostRecord
 
 
 class CostDetailView(DetailView):
     model = CostRecord
+
+
+class CostListView(ListView):
+    model = CostRecord
+
+    def get_queryset(self):
+        return CostRecord.objects.filter(
+            project=self.request.user.current_project,
+            payer=self.request.user
+        )
 
 
 class AddCostView(CreateView):
