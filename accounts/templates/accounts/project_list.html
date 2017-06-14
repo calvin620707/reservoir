@@ -3,15 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Select Current Project</title>
+    <style>
+        th, td {
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
 <a href="{% url 'accounts:my-new-project' %}">Create New Project</a>
 <form action="{% url 'accounts:my-current-project' %}" method="post">
     {% csrf_token %}
-    {% for project in object_list %}
-        <input type="radio" name="project_id" id="project{{ forloop.counter }}" value="{{ project.id }}"/>
-        <label for="project{{ forloop.counter }}">{{ project.name }}</label><br/>
-    {% endfor %}
+    <table>
+        {% for project in object_list %}
+            <tr>
+                <td>
+                    <input type="radio" name="project_id" id="project{{ forloop.counter }}" value="{{ project.id }}"/>
+                    <label for="project{{ forloop.counter }}">{{ project.name }}</label>
+                </td>
+                <td><a>Invite</a></td>
+                <td><a href="{% url 'accounts:update-my-project' pk=project.id %}">Edit</a></td>
+                <td><a>Delete</a></td>
+                <td><a>Calculate</a></td>
+                <td><a>Manage Costs</a></td>
+            </tr>
+        {% endfor %}
+    </table>
     <input type="submit" value="Select"/>
 </form>
 </body>
