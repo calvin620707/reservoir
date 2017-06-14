@@ -6,6 +6,7 @@
 </head>
 <body>
 Project Name: {{ object.name }}<br/>
-Invite link: <a href={{ invite_link }}>{{ invite_link }}</a>
+Invite link: <a href={{ invite_link }}>{{ invite_link }}</a><br/>
+<a href="{% url 'sheets:add-costs' %}">Continue</a>
 </body>
 </html>
