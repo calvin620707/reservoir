@@ -3,9 +3,9 @@ import logging
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import ListView, UpdateView, DetailView
+from django.views.generic import ListView, UpdateView, DetailView, DeleteView
 
 from accounts.models import Project
 
@@ -59,6 +59,11 @@ class MyProjectUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('sheets:add-costs')
+
+
+class MyProjectDeleteView(DeleteView):
+    model = Project
+    success_url = reverse_lazy('accounts:my-projects')
 
 
 class ProjectDetailView(DetailView):
