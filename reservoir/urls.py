@@ -18,11 +18,10 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 
-from accounts.views import MyProjectsView, MyCurrentProjectView, MyNewProjectView, MyProjectUpdateView
-from sheets.views import AddCostView
+from .views import IndexView
 
 urlpatterns = [
-    url(r'^$', login_required(AddCostView.as_view()), name='sheets-add-costs'),
+    url(r'^$', login_required(IndexView.as_view()), name='index'),
     url(r'^login$', LoginView.as_view(), name='login'),
     url(r'^logout$', LogoutView.as_view(), name='logout'),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
