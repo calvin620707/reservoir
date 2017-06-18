@@ -23,8 +23,12 @@
     <a href="javascript:void(0)" onclick="w3_close()"
        class="w3-bar-item w3-button">Close</a>
     <a class="w3-bar-item w3-button" href="{% url 'accounts:my-projects' %}">Change Current Project</a>
-    <a class="w3-bar-item w3-button">Manage Costs</a>
-    <a class="w3-bar-item w3-button">Manage Project</a>
+    <a class="w3-bar-item w3-button" href="{% url 'sheets:cost-list' %}">Manage Costs</a>
+    <a class="w3-bar-item w3-button">Manage Members</a>
+    <a class="w3-bar-item w3-button"
+       href="{% url 'accounts:update-my-project' pk=request.user.current_project.id %}">
+        Edit Project
+    </a>
     <a class="w3-bar-item w3-button"
        href=" {% url 'accounts:delete-my-project' pk=request.user.current_project.id %}">
         Delete Project
