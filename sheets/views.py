@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 
 from sheets.models import CostRecord
 
@@ -38,3 +38,8 @@ class AddCostView(CreateView):
 class CostUpdateView(UpdateView):
     model = CostRecord
     fields = ['payer', 'name', 'cost', 'created_at', 'comment', 'category']
+
+
+class CostDeleteView(DeleteView):
+    model = CostRecord
+    success_url = reverse_lazy('sheets:cost-list')
