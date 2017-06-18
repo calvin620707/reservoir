@@ -4,12 +4,16 @@
     <a class="w3-button w3-xlarge" href="{% url 'sheets:add-costs' %}">Add Another Cost</a>
     <table>
         <tr>
+            <th>Date</th>
             <th>Name</th>
+            <th>Cost</th>
             <th>Options</th>
         </tr>
         {% for cost in object_list %}
             <tr>
+                <td class="w3-xlarge">{{ cost.created_at }}</td>
                 <td class="w3-xlarge">{{ cost.name }}</td>
+                <td class="w3-xlarge">{{ cost.cost }}</td>
                 <td><a class="w3-button w3-xlarge" href="{% url 'sheets:update-cost' pk=cost.id %}">Edit</a>
                     <a class="w3-button w3-xlarge" href="{% url 'sheets:delete-cost' pk=cost.id %}">Delete</a>
                 </td>
