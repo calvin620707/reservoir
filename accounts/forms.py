@@ -1,6 +1,7 @@
 from django import forms
 
-from accounts.models import Project
+from accounts.models import Project, ProjectMembership
+from accounts.util import refresh_project_memberships
 
 
 class UpdateProjectForm(forms.ModelForm):
@@ -14,6 +15,12 @@ class UpdateProjectForm(forms.ModelForm):
         widgets = {
             'members': forms.CheckboxSelectMultiple,
         }
+
+    def save(self, commit=True):
+        super().save(commit=False)
+        if 'members' in self.changed_data:
+            refresh_project_memberships(self.instance, list(self.cleaned_data['members'].all()))
+        self.instance.save()
 
 
 class CreateNewProjectForm(forms.ModelForm):

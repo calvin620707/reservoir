@@ -4,11 +4,12 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import ListView, UpdateView, DetailView, DeleteView
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from django.views.generic.base import ContextMixin
 
 from accounts.forms import CreateNewProjectForm, UpdateProjectForm
-from accounts.models import Project
+from accounts.models import Project, ProjectMembership
+from accounts.util import refresh_project_memberships
 
 logger = logging.getLogger()
 
@@ -24,10 +25,9 @@ class MyNewProjectView(View):
     def post(self, request):
         form = CreateNewProjectForm(request.POST)
         if form.is_valid():
-            proj = Project(name=form.cleaned_data['name'])
-            proj.save()
-            proj.members.add(request.user)
-            proj.save()
+            proj = Project.objects.create(name=form.cleaned_data['name'])
+
+            refresh_project_memberships(proj, [request.user])
 
             request.user.current_project = proj
             request.user.save()
@@ -93,10 +93,10 @@ class JoinProjectView(View):
     def post(self, request, project_id):
         """Join a let current user join given project"""
         project = get_object_or_404(Project, id=project_id)
-        project.members.add(request.user)
+        members = list(project.members.all())
+        members.append(request.user)
+        refresh_project_memberships(project, members)
         request.user.current_project = project
-
-        project.save()
         request.user.save()
 
         return HttpResponse("You joined {}".format(project.name))
