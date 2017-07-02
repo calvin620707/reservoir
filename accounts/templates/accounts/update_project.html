@@ -5,6 +5,7 @@
     <title>Update Project</title>
 </head>
 <body>
+Invite link: <a href={{ invite_link }}>{{ invite_link }}</a><br/>
 <form action="" method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save"/>

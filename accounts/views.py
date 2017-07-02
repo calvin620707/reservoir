@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import ListView, UpdateView, DetailView, DeleteView
+from django.views.generic.base import ContextMixin
 
 from accounts.models import Project
 
@@ -52,13 +53,22 @@ class MyNewProjectView(View):
         return render(request, 'accounts/create_new_project.html', {'form': form})
 
 
-class MyProjectUpdateView(UpdateView):
+class MyProjectUpdateView(UpdateView, ContextMixin):
     model = Project
     fields = ['name', 'description', 'start_date', 'end_date', 'members']
     template_name = 'accounts/update_project.html'
 
     def get_success_url(self):
         return reverse('sheets:add-costs')
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['invite_link'] = self.request.build_absolute_uri(
+            reverse('accounts:join-project', kwargs={'project_id': context['object'].id})
+        )
+        return context
 
 
 class MyProjectDeleteView(DeleteView):
