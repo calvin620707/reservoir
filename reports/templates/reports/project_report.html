@@ -10,16 +10,16 @@
         </tr>
         {% for cost in costs %}
             <tr>
-                <td class="w3-xlarge">{{ cost.created_at }}</td>
-                <td class="w3-xlarge">{{ cost.name }}</td>
-                <td class="w3-xlarge">{{ cost.cost }}</td>
-                <td class="w3-xlarge">{{ cost.comment }}</td>
+                <td class="w3-large">{{ cost.created_at }}</td>
+                <td class="w3-large">{{ cost.name }}</td>
+                <td class="w3-large">{{ cost.cost }}</td>
+                <td class="w3-large">{{ cost.comment }}</td>
             </tr>
         {% endfor %}
     </table>
     <form action="" method="post">
         {% csrf_token %}
-        <input class="w3-button" type="submit" value="Confirm">
-        <a class="w3-button" href="{% url 'sheets:cost-list' %}">No</a>
+        <input class="w3-button w3-xlarge" type="submit" value="Confirm">
+        <a class="w3-button w3-xlarge" href="{% url 'sheets:cost-list' %}">No</a>
     </form>
 {% endblock %}
