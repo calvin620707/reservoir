@@ -1,25 +1,25 @@
 {% extends "base.html" %}
-{% block title %}Manage Costs{% endblock %}
+{% block title %}Project Report{% endblock %}
 {% block content %}
-    <a class="w3-button w3-xlarge" href="{% url 'sheets:add-costs' %}">Add Another Cost</a>
     <table>
         <tr>
             <th class="w3-xlarge">Date</th>
             <th class="w3-xlarge">Name</th>
             <th class="w3-xlarge">Cost</th>
             <th class="w3-xlarge">Comment</th>
-            <th class="w3-xlarge">Options</th>
         </tr>
-        {% for cost in object_list %}
+        {% for cost in costs %}
             <tr>
                 <td class="w3-xlarge">{{ cost.created_at }}</td>
                 <td class="w3-xlarge">{{ cost.name }}</td>
                 <td class="w3-xlarge">{{ cost.cost }}</td>
                 <td class="w3-xlarge">{{ cost.comment }}</td>
-                <td><a class="w3-button w3-xlarge" href="{% url 'sheets:update-cost' pk=cost.id %}">Edit</a>
-                    <a class="w3-button w3-xlarge" href="{% url 'sheets:delete-cost' pk=cost.id %}">Delete</a>
-                </td>
             </tr>
         {% endfor %}
     </table>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input class="w3-button" type="submit" value="Confirm">
+        <a class="w3-button" href="{% url 'sheets:cost-list' %}">No</a>
+    </form>
 {% endblock %}

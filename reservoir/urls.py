@@ -24,8 +24,9 @@ urlpatterns = [
     url(r'^$', login_required(IndexView.as_view()), name='index'),
     url(r'^login$', LoginView.as_view(), name='login'),
     url(r'^logout$', LogoutView.as_view(), name='logout'),
-    url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^sheets/', include('sheets.urls')),
+    url(r'^reports/', include('reports.urls')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^admin/', admin.site.urls),
 ]
