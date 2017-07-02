@@ -1,6 +1,5 @@
 import logging
 
-from django import forms
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -8,6 +7,7 @@ from django.views import View
 from django.views.generic import ListView, UpdateView, DetailView, DeleteView
 from django.views.generic.base import ContextMixin
 
+from accounts.forms import CreateNewProjectForm, UpdateProjectForm
 from accounts.models import Project
 
 logger = logging.getLogger()
@@ -18,19 +18,6 @@ class MyProjectsView(ListView):
 
     def get_queryset(self):
         return self.request.user.project_set.all()
-
-
-class CreateNewProjectForm(forms.ModelForm):
-    class Meta:
-        model = Project
-        fields = ['name', 'description', 'start_date', 'end_date']
-
-    def clean(self):
-        cleaned_data = super().clean()
-        e_date = cleaned_data.get('end_date')
-        s_date = cleaned_data.get('start_date')
-        if (e_date and s_date) and (e_date < s_date):
-            raise forms.ValidationError("End date should be greater than start date.")
 
 
 class MyNewProjectView(View):
@@ -55,7 +42,7 @@ class MyNewProjectView(View):
 
 class MyProjectUpdateView(UpdateView, ContextMixin):
     model = Project
-    fields = ['name', 'description', 'start_date', 'end_date', 'members']
+    form_class = UpdateProjectForm
     template_name = 'accounts/update_project.html'
 
     def get_success_url(self):
