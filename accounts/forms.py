@@ -1,6 +1,6 @@
 from django import forms
 
-from accounts.models import Project, ProjectMembership
+from accounts.models import Project
 from accounts.util import refresh_project_memberships
 
 

@@ -55,6 +55,12 @@ class MyProjectUpdateView(UpdateView, ContextMixin):
         context['invite_link'] = self.request.build_absolute_uri(
             reverse('accounts:join-project', kwargs={'project_id': context['object'].id})
         )
+
+        members = context['object'].members.all()
+        memberships = {}
+        for m in members:
+            memberships[m.username] = ProjectMembership.objects.get(project=context['object'], user=m)
+        context['memberships'] = memberships
         return context
 
 

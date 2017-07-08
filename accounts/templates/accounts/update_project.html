@@ -1,14 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Update Project</title>
-</head>
-<body>
-Invite link: <a href={{ invite_link }}>{{ invite_link }}</a><br/>
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save"/>
-</form>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Update Project{% endblock %}
+{% block content %}
+    <h1>Invite link</h1>
+    <a href={{ invite_link }}>{{ invite_link }}</a>
+    <form action="" method="post">{% csrf_token %}
+        <h1>Project</h1>
+        {{ form.as_p }}
+        <input class="w3-button w3-xlarge" type="submit" value="Save"/>
+    </form>
+    <h1>Members Responsibilities</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Responsibility</th>
+        </tr>
+        {% for name, ship in memberships.items %}
+            <tr>
+                <td>{{ name }}</td>
+                <td>{{ ship.rate }}</td>
+            </tr>
+
+        {% endfor %}
+    </table>
+{% endblock %}
