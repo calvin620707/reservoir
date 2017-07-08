@@ -46,7 +46,7 @@ class MyProjectUpdateView(UpdateView, ContextMixin):
     template_name = 'accounts/update_project.html'
 
     def get_success_url(self):
-        return reverse('sheets:add-costs')
+        return reverse('accounts:update-my-project', kwargs={'pk': self.get_object().id})
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -56,13 +56,8 @@ class MyProjectUpdateView(UpdateView, ContextMixin):
             reverse('accounts:join-project', kwargs={'project_id': context['object'].id})
         )
 
-        members = context['object'].members.all()
-        memberships = {}
-        for m in members:
-            memberships[m] = ProjectMembership.objects.get(project=context['object'], user=m)
-        context['memberships'] = memberships
         context['membership_formset'] = MembershipFormSet(
-            queryset=ProjectMembership.objects.filter(project=context['object'], user__in=members)
+            queryset=ProjectMembership.objects.filter(project=context['object'])
         )
         return context
 
@@ -70,8 +65,10 @@ class MyProjectUpdateView(UpdateView, ContextMixin):
 class UpdateMembershipView(View):
     def post(self, request):
         formset = MembershipFormSet(request.POST)
-        formset.save()
-        return HttpResponseRedirect(reverse('sheets:add-costs'))
+        if formset.is_valid():
+            formset.save()
+            return HttpResponseRedirect(reverse('sheets:add-costs'))
+        return render(request, 'accounts/update_project.html', {'membership_formset': formset})
 
 
 class MyProjectDeleteView(DeleteView):

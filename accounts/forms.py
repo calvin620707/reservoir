@@ -32,8 +32,17 @@ class UpdateMembershipForm(forms.ModelForm):
             'user': forms.Select(attrs={'readonly': True})
         }
 
+    def clean(self):
+        super().clean()
+        if 'user' in self.changed_data:
+            raise forms.ValidationError("You shouldn't change user")
 
-MembershipFormSet = modelformset_factory(models.ProjectMembership, form=UpdateMembershipForm, extra=0)
+
+MembershipFormSet = modelformset_factory(
+    models.ProjectMembership,
+    form=UpdateMembershipForm,
+    extra=0
+)
 
 
 class CreateNewProjectForm(forms.ModelForm):
