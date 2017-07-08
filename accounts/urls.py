@@ -12,5 +12,6 @@ urlpatterns = [
         name='delete-my-project'),
     url(r'^me/project/(?P<project_id>[0-9]+)/join$', login_required(views.JoinProjectView.as_view()),
         name='join-project'),
-    url(r'^project/(?P<pk>[0-9]+)$', login_required(views.ProjectDetailView.as_view()), name='project-detail')
+    url(r'^project/(?P<pk>[0-9]+)$', login_required(views.ProjectDetailView.as_view()), name='project-detail'),
+    url(r'^project/memberships$', login_required(views.UpdateMembershipView.as_view()), name='update-memberships')
 ]

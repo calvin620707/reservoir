@@ -1,14 +1,13 @@
 import logging
 
-from django.forms import modelformset_factory
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, request
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from django.views.generic.base import ContextMixin
 
-from accounts.forms import CreateNewProjectForm, UpdateProjectForm, UpdateMembershipForm, MembershipFormSet
+from accounts.forms import CreateNewProjectForm, UpdateProjectForm, MembershipFormSet
 from accounts.models import Project, ProjectMembership
 from accounts.util import refresh_project_memberships
 
@@ -66,6 +65,13 @@ class MyProjectUpdateView(UpdateView, ContextMixin):
             queryset=ProjectMembership.objects.filter(project=context['object'], user__in=members)
         )
         return context
+
+
+class UpdateMembershipView(View):
+    def post(self, request):
+        formset = MembershipFormSet(request.POST)
+        formset.save()
+        return HttpResponseRedirect(reverse('sheets:add-costs'))
 
 
 class MyProjectDeleteView(DeleteView):

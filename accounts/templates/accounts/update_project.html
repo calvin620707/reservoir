@@ -9,7 +9,7 @@
         <input class="w3-button w3-xlarge" type="submit" value="Save"/>
     </form>
     <h1>Members Responsibilities</h1>
-    <form method="post" action="">
+    <form method="post" action="{% url 'accounts:update-memberships' %}">
         {% csrf_token %}
         {{ membership_formset.management_form }}
         <table>

@@ -29,7 +29,7 @@ class UpdateMembershipForm(forms.ModelForm):
         model = models.ProjectMembership
         fields = ['user', 'rate']
         widgets = {
-            'user': forms.Select(attrs={'disabled': 'disabled'})
+            'user': forms.Select(attrs={'readonly': True})
         }
 
 
