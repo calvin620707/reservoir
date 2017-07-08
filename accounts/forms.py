@@ -1,6 +1,7 @@
 from django import forms
+from django.forms import modelformset_factory
 
-from accounts.models import Project
+from . import models
 from accounts.util import refresh_project_memberships
 
 
@@ -10,7 +11,7 @@ class UpdateProjectForm(forms.ModelForm):
         self.fields['members'].queryset = kwargs['instance'].members
 
     class Meta:
-        model = Project
+        model = models.Project
         fields = ['name', 'description', 'start_date', 'end_date', 'members']
         widgets = {
             'members': forms.CheckboxSelectMultiple,
@@ -23,9 +24,21 @@ class UpdateProjectForm(forms.ModelForm):
         self.instance.save()
 
 
+class UpdateMembershipForm(forms.ModelForm):
+    class Meta:
+        model = models.ProjectMembership
+        fields = ['user', 'rate']
+        widgets = {
+            'user': forms.Select(attrs={'disabled': 'disabled'})
+        }
+
+
+MembershipFormSet = modelformset_factory(models.ProjectMembership, form=UpdateMembershipForm, extra=0)
+
+
 class CreateNewProjectForm(forms.ModelForm):
     class Meta:
-        model = Project
+        model = models.Project
         fields = ['name', 'description', 'start_date', 'end_date']
 
     def clean(self):

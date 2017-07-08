@@ -1,5 +1,6 @@
 import logging
 
+from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -7,7 +8,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
 from django.views.generic.base import ContextMixin
 
-from accounts.forms import CreateNewProjectForm, UpdateProjectForm
+from accounts.forms import CreateNewProjectForm, UpdateProjectForm, UpdateMembershipForm, MembershipFormSet
 from accounts.models import Project, ProjectMembership
 from accounts.util import refresh_project_memberships
 
@@ -59,8 +60,11 @@ class MyProjectUpdateView(UpdateView, ContextMixin):
         members = context['object'].members.all()
         memberships = {}
         for m in members:
-            memberships[m.username] = ProjectMembership.objects.get(project=context['object'], user=m)
+            memberships[m] = ProjectMembership.objects.get(project=context['object'], user=m)
         context['memberships'] = memberships
+        context['membership_formset'] = MembershipFormSet(
+            queryset=ProjectMembership.objects.filter(project=context['object'], user__in=members)
+        )
         return context
 
 

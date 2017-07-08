@@ -9,17 +9,14 @@
         <input class="w3-button w3-xlarge" type="submit" value="Save"/>
     </form>
     <h1>Members Responsibilities</h1>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Responsibility</th>
-        </tr>
-        {% for name, ship in memberships.items %}
-            <tr>
-                <td>{{ name }}</td>
-                <td>{{ ship.rate }}</td>
-            </tr>
-
-        {% endfor %}
-    </table>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ membership_formset.management_form }}
+        <table>
+            {% for form in membership_formset %}
+                {{ form.as_table }}
+            {% endfor %}
+        </table>
+        <input class="w3-button w3-xlarge" type="submit" value="Save"/>
+    </form>
 {% endblock %}

@@ -22,7 +22,7 @@ class Project(models.Model):
 class ProjectMembership(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    rate = models.PositiveSmallIntegerField()
+    rate = models.PositiveSmallIntegerField(verbose_name='Responsibility')
 
     def __str__(self):
         return "{} {}".format(self.user, self.rate)
