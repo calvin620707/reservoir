@@ -39,11 +39,22 @@ class UpdateMembershipForm(forms.ModelForm):
             raise forms.ValidationError("You shouldn't change user")
 
 
-MembershipFormSet = modelformset_factory(
+BaseMembershipFormSet = modelformset_factory(
     models.ProjectMembership,
     form=UpdateMembershipForm,
     extra=0
 )
+
+
+class MembershipFormSet(BaseMembershipFormSet):
+    def clean(self):
+        super().clean()
+        rate_sum = 0
+        for form in self.forms:
+            rate_sum += form.cleaned_data['rate']
+
+        if rate_sum != 100:
+            raise forms.ValidationError("Sum of responsibility should equal to 100")
 
 
 class CreateNewProjectForm(forms.ModelForm):

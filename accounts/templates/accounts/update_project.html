@@ -9,11 +9,11 @@
         {{ project_form.as_p }}
         <input class="w3-button w3-xlarge" type="submit" value="Save"/>
         <h1>Members Responsibilities</h1>
-        {{ memberships_formset.management_form }}
+        {% for error in memberships_formset.non_form_errors %}
+            {{ error }}
+        {% endfor %}
         <table>
-            {% for form in memberships_formset %}
-                {{ form.as_table }}
-            {% endfor %}
+            {{ memberships_formset.as_table }}
         </table>
         <input class="w3-button w3-xlarge" type="submit" value="Save"/>
     </form>
