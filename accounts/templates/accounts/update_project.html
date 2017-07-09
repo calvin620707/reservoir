@@ -3,17 +3,15 @@
 {% block content %}
     <h1>Invite link</h1>
     <a href={{ invite_link }}>{{ invite_link }}</a>
-    <form action="" method="post">{% csrf_token %}
-        <h1>Project</h1>
-        {{ form.as_p }}
-        <input class="w3-button w3-xlarge" type="submit" value="Save"/>
-    </form>
-    <h1>Members Responsibilities</h1>
-    <form method="post" action="{% url 'accounts:update-memberships' %}">
+    <form action="" method="post">
         {% csrf_token %}
-        {{ membership_formset.management_form }}
+        <h1>Project</h1>
+        {{ project_form.as_p }}
+        <input class="w3-button w3-xlarge" type="submit" value="Save"/>
+        <h1>Members Responsibilities</h1>
+        {{ memberships_formset.management_form }}
         <table>
-            {% for form in membership_formset %}
+            {% for form in memberships_formset %}
                 {{ form.as_table }}
             {% endfor %}
         </table>

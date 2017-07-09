@@ -8,7 +8,8 @@ from accounts.util import refresh_project_memberships
 class UpdateProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['members'].queryset = kwargs['instance'].members
+        if kwargs.get('instance'):
+            self.fields['members'].queryset = self.instance.members.all()
 
     class Meta:
         model = models.Project

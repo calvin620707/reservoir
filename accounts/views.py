@@ -40,35 +40,29 @@ class MyNewProjectView(View):
         return render(request, 'accounts/create_new_project.html', {'form': form})
 
 
-class MyProjectUpdateView(UpdateView, ContextMixin):
-    model = Project
-    form_class = UpdateProjectForm
-    template_name = 'accounts/update_project.html'
-
-    def get_success_url(self):
-        return reverse('accounts:update-my-project', kwargs={'pk': self.get_object().id})
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
-        context['invite_link'] = self.request.build_absolute_uri(
-            reverse('accounts:join-project', kwargs={'project_id': context['object'].id})
+def update_project_view(request, pk):
+    proj = get_object_or_404(Project, pk=pk)
+    invite_link = request.build_absolute_uri(
+        reverse('accounts:join-project', kwargs={'project_id': proj.id})
+    )
+    if request.method == 'POST':
+        project_form = UpdateProjectForm(request.POST, instance=proj, prefix='project')
+        memberships_formset = MembershipFormSet(request.POST, prefix='memberships')
+        if all([project_form.is_valid(), memberships_formset.is_valid()]):
+            project_form.save()
+            memberships_formset.save()
+    else:
+        project_form = UpdateProjectForm(instance=proj, prefix='project')
+        memberships_formset = MembershipFormSet(
+            queryset=ProjectMembership.objects.filter(project=proj),
+            prefix='memberships'
         )
 
-        context['membership_formset'] = MembershipFormSet(
-            queryset=ProjectMembership.objects.filter(project=context['object'])
-        )
-        return context
-
-
-class UpdateMembershipView(View):
-    def post(self, request):
-        formset = MembershipFormSet(request.POST)
-        if formset.is_valid():
-            formset.save()
-            return HttpResponseRedirect(reverse('sheets:add-costs'))
-        return render(request, 'accounts/update_project.html', {'membership_formset': formset})
+    return render(request, 'accounts/update_project.html', {
+        'project_form': project_form,
+        'memberships_formset': memberships_formset,
+        'invite_link': invite_link
+    })
 
 
 class MyProjectDeleteView(DeleteView):
