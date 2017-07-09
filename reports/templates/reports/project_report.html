@@ -1,12 +1,41 @@
 {% extends "base.html" %}
 {% block title %}Project Report{% endblock %}
 {% block content %}
+    <h1>Report</h1>
+    <p>Sum: {{ result.sum }}</p>
+    <p>Average: {{ result.avg }}</p>
+    <h2>User Reports</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Paid</th>
+            <th>Result</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user, user_report in result.user_reports.items %}
+            <tr>
+                <td>{{ user }}</td>
+                <td>{{ user_report.paid }}</td>
+                {% if user_report.result.should_get %}
+                    <td>Should get {{ user_report.result.value }}</td>
+                {% else %}
+                    <td>Should pay {{ user_report.result.value }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Details</h1>
     <table>
         <tr>
             <th class="w3-xlarge">Date</th>
             <th class="w3-xlarge">Name</th>
             <th class="w3-xlarge">Cost</th>
             <th class="w3-xlarge">Comment</th>
+            <th class="w3-xlarge">Payer</th>
         </tr>
         {% for cost in costs %}
             <tr>
@@ -14,6 +43,7 @@
                 <td class="w3-large">{{ cost.name }}</td>
                 <td class="w3-large">{{ cost.cost }}</td>
                 <td class="w3-large">{{ cost.comment }}</td>
+                <td class="w3-large">{{ cost.payer }}</td>
             </tr>
         {% endfor %}
     </table>
