@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Final Project Report{% endblock %}
+{% block content %}
+    <h1>Calculated Costs</h1>
+    <table>
+        <tr>
+            <th class="w3-xlarge">Date</th>
+            <th class="w3-xlarge">Name</th>
+            <th class="w3-xlarge">Cost</th>
+            <th class="w3-xlarge">Comment</th>
+            <th class="w3-xlarge">Payer</th>
+        </tr>
+        {% for cost in costs %}
+            <tr>
+                <td class="w3-large">{{ cost.created_at }}</td>
+                <td class="w3-large">{{ cost.name }}</td>
+                <td class="w3-large">{{ cost.cost }}</td>
+                <td class="w3-large">{{ cost.comment }}</td>
+                <td class="w3-large">{{ cost.payer }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a class="w3-button" href="{% url 'sheets:add-costs' %}">Back</a>
+{% endblock %}

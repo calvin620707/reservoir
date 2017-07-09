@@ -19,9 +19,9 @@
                 <td>{{ user }}</td>
                 <td>{{ user_report.paid }}</td>
                 {% if user_report.result.should_get %}
-                    <td>Should get {{ user_report.result.value }}</td>
+                    <td>{{ user }} should get {{ user_report.result.value }} from other users</td>
                 {% else %}
-                    <td>Should pay {{ user_report.result.value }}</td>
+                    <td>{{ user }} should pay {{ user_report.result.value }} to other users</td>
                 {% endif %}
             </tr>
         {% endfor %}
@@ -49,6 +49,10 @@
     </table>
     <form action="" method="post">
         {% csrf_token %}
+        {% for cost in costs %}
+            <input type="hidden" name="cost_ids" value="{{ cost.id }}">
+        {% endfor %}
+
         <input class="w3-button w3-xlarge" type="submit" value="Confirm">
         <a class="w3-button w3-xlarge" href="{% url 'sheets:cost-list' %}">No</a>
     </form>
