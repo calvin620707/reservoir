@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Project Report{% endblock %}
 {% block content %}
-    <h1>Report</h1>
+    <h2>Reports</h2>
     <p>Sum: {{ result.sum }}</p>
-    <p>Average: {{ result.avg }}</p>
-    <h2>User Reports</h2>
     <table>
         <thead>
         <tr>
             <th>User</th>
+            <th>Responsibility</th>
+            <th>Should Pay</th>
             <th>Paid</th>
             <th>Result</th>
         </tr>
@@ -17,6 +17,8 @@
         {% for user, user_report in result.user_reports.items %}
             <tr>
                 <td>{{ user }}</td>
+                <td>{{ user_report.responsibility }}</td>
+                <td>{{ user_report.should_pay }}</td>
                 <td>{{ user_report.paid }}</td>
                 {% if user_report.result.should_get %}
                     <td>{{ user }} should get {{ user_report.result.value }} from other users</td>

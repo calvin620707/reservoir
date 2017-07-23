@@ -1,15 +1,7 @@
-from collections import namedtuple, defaultdict
-
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
 from sheets.models import CostRecord
-
-
-class ReportResult:
-    sum = 0
-    avg = 0.0
-    user_reports = {}
 
 
 class ProjectReportView(View):
@@ -43,17 +35,32 @@ class ProjectReportView(View):
         )
 
     def _calculate_report(self, costs, proj):
-        result = ReportResult()
+        result = {'sum': 0, 'user_reports': {}}
 
         for user in proj.members.all():
-            result.user_reports[user] = {'paid': 0, 'result': {'should_get': True, 'value': 0}}
+            result['user_reports'][user] = {
+                'responsibility': proj.projectmembership_set.get(user=user).rate,
+                'paid': 0,
+                'should_pay': 0,
+                'result': {
+                    'should_get': True,
+                    'value': 0
+                }
+            }
+
         for cost in costs:
-            result.sum += cost.cost
-            result.user_reports[cost.payer]['paid'] += cost.cost
-        result.avg = result.sum / proj.members.count()
-        for user in result.user_reports:
-            diff = result.avg - result.user_reports[user]['paid']
-            result.user_reports[user]['result']['should_get'] = diff < 0
-            result.user_reports[user]['result']['value'] = abs(diff)
+            result['sum'] += cost.cost
+            result['user_reports'][cost.payer]['paid'] += cost.cost
+
+        total_responsibilities = 0
+        for user in result['user_reports'].values():
+            total_responsibilities += user['responsibility']
+
+        for user in result['user_reports'].keys():
+            user_report = result['user_reports'][user]
+            user_report['should_pay'] = result['sum'] * user_report['responsibility'] / total_responsibilities
+            diff = user_report['should_pay'] - user_report['paid']
+            user_report['result']['should_get'] = diff < 0
+            user_report['result']['value'] = abs(diff)
 
         return result
