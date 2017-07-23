@@ -4,3 +4,4 @@ social-auth-app-django
 dj-database-url
 psycopg2
 whitenoise
+pytest-django
