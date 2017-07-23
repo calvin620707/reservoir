@@ -27,8 +27,11 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <h1>Details</h1>
+    {% if not confirmed %}
+        <h1>Details</h1>
+    {% else %}
+        <h1>Calculated Costs</h1>
+    {% endif %}
     <table>
         <tr>
             <th class="w3-xlarge">Date</th>
@@ -47,13 +50,17 @@
             </tr>
         {% endfor %}
     </table>
-    <form action="" method="post">
-        {% csrf_token %}
-        {% for cost in costs %}
-            <input type="hidden" name="cost_ids" value="{{ cost.id }}">
-        {% endfor %}
+    {% if not confirmed %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for cost in costs %}
+                <input type="hidden" name="cost_ids" value="{{ cost.id }}">
+            {% endfor %}
 
-        <input class="w3-button w3-xlarge" type="submit" value="Confirm">
-        <a class="w3-button w3-xlarge" href="{% url 'sheets:cost-list' %}">No</a>
-    </form>
+            <input class="w3-button w3-xlarge" type="submit" value="Confirm">
+            <a class="w3-button w3-xlarge" href="{% url 'sheets:cost-list' %}">No</a>
+        </form>
+    {% else %}
+        <a class="w3-button" href="{% url 'sheets:add-costs' %}">Back</a>
+    {% endif %}
 {% endblock %}
