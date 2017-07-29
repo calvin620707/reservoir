@@ -3,6 +3,8 @@
 {% block bootstrap3_extra_head %}
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+    <link rel="stylesheet" href="static/bootstrap-social.css">
+    <script src="https://use.fontawesome.com/0a95c18c65.js"></script>
     <style>
         body, h1, h2, h3, h4, h5, h6 {
             font-family: "Karma", sans-serif
@@ -21,43 +23,53 @@
 {% endblock %}
 
 {% block bootstrap3_content %}
-    <!-- Sidebar (hidden by default) -->
-    <nav class="w3-sidebar w3-bar-block w3-card-2 w3-top w3-xlarge w3-animate-left"
-         style="display:none;z-index:2;width:40%;min-width:300px" id="baseSidebar">
-        <a href="javascript:void(0)" onclick="w3_close()"
-           class="w3-bar-item w3-button">Close</a>
-        <a class="w3-bar-item w3-button" href="{% url 'sheets:cost-list' %}">
-            Manage Costs
-        </a>
-        <a class="w3-bar-item w3-button" href="{% url 'reports:current-project-report' %}">
-            Project Report
-        </a>
-        <a class="w3-bar-item w3-button" href="{% url 'accounts:my-projects' %}">
-            Change Project
-        </a>
-        <a class="w3-bar-item w3-button"
-           href="{% url 'accounts:update-my-project' pk=request.user.current_project.id %}">
-            Manage Project
-        </a>
-        <a class="w3-bar-item w3-button"
-           href=" {% url 'accounts:delete-my-project' pk=request.user.current_project.id %}">
-            Delete Project
-        </a>
-    </nav>
+    {% if request.user.current_project %}
+        <!-- Sidebar (hidden by default) -->
+        <nav class="w3-sidebar w3-bar-block w3-card-2 w3-top w3-xlarge w3-animate-left"
+             style="display:none;z-index:2;width:40%;min-width:300px" id="baseSidebar">
+            <a href="javascript:void(0)" onclick="w3_close()"
+               class="w3-bar-item w3-button">Close</a>
+            <a class="w3-bar-item w3-button" href="{% url 'sheets:cost-list' %}">
+                Manage Costs
+            </a>
+            <a class="w3-bar-item w3-button" href="{% url 'reports:current-project-report' %}">
+                Project Report
+            </a>
+            <a class="w3-bar-item w3-button" href="{% url 'accounts:my-projects' %}">
+                Change Project
+            </a>
+            <a class="w3-bar-item w3-button"
+               href="{% url 'accounts:update-my-project' pk=request.user.current_project.id %}">
+                Manage Project
+            </a>
+            <a class="w3-bar-item w3-button"
+               href=" {% url 'accounts:delete-my-project' pk=request.user.current_project.id %}">
+                Delete Project
+            </a>
+        </nav>
 
-    <!-- Top menu -->
-    <div class="w3-top">
-        <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
-            <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
-            <div class="w3-right w3-padding-16">
-                <a class="w3-bar-item">Hi {{ request.user }}</a>
-                <a class="w3-bar-item w3-button" href="{% url 'logout' %}">Logout</a>
-            </div>
-            <div class="w3-center w3-padding-16">
-                <a class="w3-button" href="{% url 'index' %}">{{ request.user.current_project.name }}</a>
+        <!-- Top menu -->
+        <div class="w3-top">
+            <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+                <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+                <div class="w3-right w3-padding-16">
+                    <a class="w3-bar-item">Hi {{ request.user }}</a>
+                    <a class="w3-bar-item w3-button" href="{% url 'logout' %}">Logout</a>
+                </div>
+                <div class="w3-center w3-padding-16">
+                    <a class="w3-button" href="{% url 'index' %}">{{ request.user.current_project.name }}</a>
+                </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <div class="w3-top">
+            <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+                <div class="w3-center w3-padding-16">
+                    Reservoir
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     <!-- Content -->
     <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">

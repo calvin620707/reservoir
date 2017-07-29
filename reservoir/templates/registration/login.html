@@ -1,6 +1,12 @@
-{#{% extends 'base.html' %}#}
+{% extends 'base.html' %}
+
+{% block title %}Reservoir - Login{% endblock %}
 
 {% block content %}
-    <h2>Login</h2>
-    <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a><br>
+    <div class="center-block">
+        <a class="btn btn-block btn-social btn-lg btn-facebook center-block" href="{% url 'social:begin' 'facebook' %}"
+           style="max-width:350px">
+            <i class="fa fa-facebook"></i>Login with Facebook
+        </a>
+    </div>
 {% endblock %}
