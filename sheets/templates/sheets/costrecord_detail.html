@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+
 {% block title %}Add Cost{% endblock %}
+
 {% block content %}
 
     <div class="w3-xlarge">Name: {{ object.name }}<br/>
@@ -12,5 +14,5 @@
         Created at: {{ object.created_at }}<br/>
     </div>
     <br/>
-    <a class="w3-button w3-xlarge" href="{% url 'sheets:add-costs' %}">Add another cost</a>
+    <a class="btn btn-default" href="{% url 'sheets:add-costs' %}">Add another cost</a>
 {% endblock %}
