@@ -103,7 +103,7 @@ class JoinProjectView(View):
         project = get_object_or_404(Project, id=project_id)
         members = list(project.members.all())
         if request.user in members:
-            messages.add_message(request, messages.INFO, "You already joined {}.".format(project.name))
+            messages.add_message(request, messages.INFO, 'You already joined "{}" project.'.format(project.name))
             return HttpResponseRedirect(reverse('sheets:add-costs'))
 
         members.append(request.user)
@@ -111,6 +111,6 @@ class JoinProjectView(View):
         request.user.current_project = project
         request.user.save()
 
-        messages.add_message(request, messages.SUCCESS, "You joined {}.".format(project.name))
+        messages.add_message(request, messages.SUCCESS, 'You joined "{}" project.'.format(project.name))
 
         return HttpResponseRedirect(reverse('sheets:add-costs'))

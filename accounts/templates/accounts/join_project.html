@@ -5,7 +5,7 @@
     <div class="jumbotron">
         <div class="container">
             <h1>Join {{ project.name }}</h1>
-            <p>Are you sure you want to join {{ project.name }} ?</p>
+            <p>Are you sure you want to join {{ project.name }} project ?</p>
         </div>
     </div>
     <form action="{% url 'accounts:join-project' project_id=project.id %}" method="post">
