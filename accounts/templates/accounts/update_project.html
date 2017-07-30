@@ -28,9 +28,11 @@
         {% for error in memberships_formset.non_form_errors %}
             {{ error }}
         {% endfor %}
-        <table class="table">
-            {{ memberships_formset.as_table }}
-        </table>
+        <div class="table-responsive">
+            <table class="table">
+                {{ memberships_formset.as_table }}
+            </table>
+        </div>
         {% buttons submit='Save' %}{% endbuttons %}
     </form>
 {% endblock %}

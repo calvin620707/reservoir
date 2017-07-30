@@ -4,55 +4,60 @@
 {% block content %}
     <h2>Reports</h2>
     <p>Sum: {{ result.sum }}</p>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>User</th>
-            <th>Responsibility</th>
-            <th>Should Pay</th>
-            <th>Paid</th>
-            <th>Result</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for user, user_report in result.user_reports.items %}
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
             <tr>
-                <td>{{ user }}</td>
-                <td>{{ user_report.responsibility }}%</td>
-                <td>{{ user_report.should_pay }}</td>
-                <td>{{ user_report.paid }}</td>
-                {% if user_report.result.should_get %}
-                    <td>{{ user }} should get {{ user_report.result.value }} from other users</td>
-                {% else %}
-                    <td>{{ user }} should pay {{ user_report.result.value }} to other users</td>
-                {% endif %}
+                <th>User</th>
+                <th>Responsibility</th>
+                <th>Should Pay</th>
+                <th>Paid</th>
+                <th>Result</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for user, user_report in result.user_reports.items %}
+                <tr>
+                    <td>{{ user }}</td>
+                    <td>{{ user_report.responsibility }}%</td>
+                    <td>{{ user_report.should_pay }}</td>
+                    <td>{{ user_report.paid }}</td>
+                    {% if user_report.result.should_get %}
+                        <td>{{ user }} should get {{ user_report.result.value }} from other users</td>
+                    {% else %}
+                        <td>{{ user }} should pay {{ user_report.result.value }} to other users</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% if not confirmed %}
         <h1>Details</h1>
     {% else %}
         <h1>Calculated Costs</h1>
     {% endif %}
-    <table class="table">
-        <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Cost</th>
-            <th>Comment</th>
-            <th>Payer</th>
-        </tr>
-        {% for cost in costs %}
+    <div class="table-responsive">
+        <table class="table">
             <tr>
-                <td>{{ cost.created_at }}</td>
-                <td>{{ cost.name }}</td>
-                <td>{{ cost.cost }}</td>
-                <td>{{ cost.comment }}</td>
-                <td>{{ cost.payer }}</td>
+                <th>Date</th>
+                <th>Name</th>
+                <th>Cost</th>
+                <th>Comment</th>
+                <th>Payer</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for cost in costs %}
+                <tr>
+                    <td>{{ cost.created_at }}</td>
+                    <td>{{ cost.name }}</td>
+                    <td>{{ cost.cost }}</td>
+                    <td>{{ cost.comment }}</td>
+                    <td>{{ cost.payer }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
     {% if not confirmed %}
         <form action="" method="post">
             {% csrf_token %}
@@ -60,7 +65,7 @@
                 <input type="hidden" name="cost_ids" value="{{ cost.id }}">
             {% endfor %}
 
-            {% bootstrap_button "Confirm" button_type='submit' button_class='btn-primary'%}
+            {% bootstrap_button "Confirm" button_type='submit' button_class='btn-primary' %}
             <a class="btn btn-default" onclick="goBack()">Back</a>
         </form>
     {% else %}
