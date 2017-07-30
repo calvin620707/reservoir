@@ -66,6 +66,9 @@
                                aria-expanded="false">{{ request.user }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a href="{% url 'accounts:my-new-project' %}">
+                                    <span class="glyphicon glyphicon-plus"></span> Create Project
+                                </a></li>
                                 <li><a href="{% url 'accounts:my-projects' %}">
                                     <span class="glyphicon glyphicon-retweet"></span> Change Project
                                 </a></li>

@@ -1,12 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Project Details</title>
-</head>
-<body>
-Project Name: {{ object.name }}<br/>
-Invite link: <a href={{ invite_link }}>{{ invite_link }}</a><br/>
-<a href="{% url 'sheets:add-costs' %}">Continue</a>
-</body>
-</html>
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block title %}Reservoir - Project Created{% endblock %}
+{% block content %}
+    <p class="alert alert-success fade in alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+        {{ object.name }} Created!
+    </p>
+    <div class="panel panel-info">
+        <div class="panel-heading">Invite Link</div>
+        <div class="panel-body">
+            <div class="input-group">
+                <input id="invite-link" value="{{ invite_link }}" class="form-control" title="Invite Link" readonly>
+                <div class="input-group-btn">
+                    <button class="btn btn-default" data-clipboard-btn data-clipboard-target="#invite-link">
+                        <span class="glyphicon glyphicon-copy" title="Copy Inviate Link!"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" href="{% url 'index' %}">Continue</a>
+{% endblock %}
