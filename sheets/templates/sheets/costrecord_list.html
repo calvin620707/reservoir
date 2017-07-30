@@ -17,8 +17,12 @@
                 <td>{{ cost.comment }}</td>
 
                 <td>
-                    <a class="btn btn-default" href="{% url 'sheets:update-cost' pk=cost.id %}">Edit</a>
-                    <a class="btn btn-danger" href="{% url 'sheets:delete-cost' pk=cost.id %}">Delete</a>
+                    <a class="btn btn-default" href="{% url 'sheets:update-cost' pk=cost.id %}">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <a class="btn btn-danger" href="{% url 'sheets:delete-cost' pk=cost.id %}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
                 </td>
             </tr>
         {% endfor %}

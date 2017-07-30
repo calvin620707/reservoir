@@ -90,6 +90,8 @@ class MyCurrentProjectView(View):
         request.user.current_project = get_object_or_404(Project, id=request.POST['project_id'])
         request.user.save()
 
+        messages.success(request, 'Your current project was changed to "{}"'.format(request.user.current_project.name))
+
         return HttpResponseRedirect(reverse('sheets:add-costs'))
 
 
@@ -111,6 +113,6 @@ class JoinProjectView(View):
         request.user.current_project = project
         request.user.save()
 
-        messages.add_message(request, messages.SUCCESS, 'You joined "{}" project.'.format(project.name))
+        messages.success(request, 'You joined "{}" project.'.format(project.name))
 
         return HttpResponseRedirect(reverse('sheets:add-costs'))
