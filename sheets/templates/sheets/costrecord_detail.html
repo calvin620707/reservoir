@@ -3,17 +3,24 @@
 {% block title %}Add Cost{% endblock %}
 
 {% block content %}
-    <p class="text-success">Submit successfully!</p>
+    <p class="alert alert-success fade in alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+        Submit successfully!
+    </p>
 
-    <div class="w3-xlarge">Name: {{ object.name }}<br/>
-        Cost: {{ object.cost }}<br/>
-        Category: {{ object.get_category_display }}<br/>
-        Comment: {{ object.comment }}<br/>
-        Project: {{ object.project.name }}<br/>
-        Payer: {{ object.payer }}<br/>
-        Calculated: {{ object.calculated }}<br/>
-        Created at: {{ object.created_at }}<br/>
+    <div class="panel panel-default">
+        <div class="panel-heading">Created Cost</div>
+        <div class="panel-body">
+            Name: {{ object.name }}<br/>
+            Cost: {{ object.cost }}<br/>
+            Category: {{ object.get_category_display }}<br/>
+            Comment: {{ object.comment }}<br/>
+            Project: {{ object.project.name }}<br/>
+            Payer: {{ object.payer }}<br/>
+            Calculated: {{ object.calculated }}<br/>
+            Created at: {{ object.created_at }}<br/>
+        </div>
     </div>
     <br/>
-    <a class="btn btn-default" href="{% url 'sheets:add-costs' %}">Add another cost</a>
+    <a class="btn btn-primary" href="{% url 'sheets:add-costs' %}">Add another cost</a>
 {% endblock %}
