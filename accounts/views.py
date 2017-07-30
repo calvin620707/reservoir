@@ -102,6 +102,10 @@ class JoinProjectView(View):
         """Join a let current user join given project"""
         project = get_object_or_404(Project, id=project_id)
         members = list(project.members.all())
+        if request.user in members:
+            messages.add_message(request, messages.INFO, "You already joined {}.".format(project.name))
+            return HttpResponseRedirect(reverse('sheets:add-costs'))
+
         members.append(request.user)
         refresh_project_memberships(project, members)
         request.user.current_project = project

@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create New Project</title>
-</head>
-<body>
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save"/>
-</form>
-</body>
-</html>
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block title %}Reservoir - Create Project{% endblock %}
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons submit='Create' reset='Clear' %}{% endbuttons %}
+    </form>
+{% endblock %}
