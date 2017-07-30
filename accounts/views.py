@@ -1,11 +1,11 @@
 import logging
 
-from django.http import HttpResponseRedirect, HttpResponse, request
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import ListView, DetailView, DeleteView, UpdateView
-from django.views.generic.base import ContextMixin
+from django.views.generic import ListView, DetailView, DeleteView
 
 from accounts.forms import CreateNewProjectForm, UpdateProjectForm, MembershipFormSet
 from accounts.models import Project, ProjectMembership
@@ -107,4 +107,6 @@ class JoinProjectView(View):
         request.user.current_project = project
         request.user.save()
 
-        return HttpResponse("You joined {}".format(project.name))
+        messages.add_message(request, messages.SUCCESS, "You joined {}.".format(project.name))
+
+        return HttpResponseRedirect(reverse('sheets:add-costs'))

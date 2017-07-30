@@ -1,6 +1,16 @@
-Do you want to join project, {{ project.name }} ?
-<form action="{% url 'accounts:join-project' project_id=project.id %}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="Yes"/>
-</form>
-<a href="{% url 'sheets:add-costs' %}">No</a>
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block title %}Reservoir - Join Project{% endblock %}
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Join {{ project.name }}</h1>
+            <p>Are you sure you want to join {{ project.name }} ?</p>
+        </div>
+    </div>
+    <form action="{% url 'accounts:join-project' project_id=project.id %}" method="post">
+        {% csrf_token %}
+        <input class="btn btn-primary" type="submit" value="Join"/>
+        <button class="btn btn-default" onclick="goBack()">Back</button>
+    </form>
+{% endblock %}
