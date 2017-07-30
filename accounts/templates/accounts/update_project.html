@@ -8,8 +8,27 @@
             Success!
         </p>
     {% endif %}
+
     <h1>Invite link</h1>
-    <a href={{ invite_link }}>{{ invite_link }}</a>
+    <div class="input-group">
+        <input id="invite-link" value="{{ invite_link }}" class="form-control" title="Invite Link" readonly>
+        <div class="input-group-btn">
+            <button class="btn btn-default" data-clipboard-btn data-clipboard-target="#invite-link">
+                <span class="glyphicon glyphicon-copy" title="Copy Inviate Link!"></span>
+            </button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+    <script>
+        var clipboard = new Clipboard('[data-clipboard-btn]');
+        clipboard.on('success', function (e) {
+            console.log(e);
+        });
+        clipboard.on('error', function (e) {
+            console.log(e);
+        });
+    </script>
+
     <form action="" method="post">
         {% csrf_token %}
         <h1>Project</h1>

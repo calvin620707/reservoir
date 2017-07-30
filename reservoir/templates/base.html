@@ -3,10 +3,14 @@
 {% load static %}
 
 {% block bootstrap3_extra_head %}
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
     <link rel="stylesheet" href={% static "bootstrap-social.css" %}>
     <script src="https://use.fontawesome.com/0a95c18c65.js"></script>
+    <style>
+        body {
+            padding-top: 60px;
+        }
+    </style>
 {% endblock %}
 
 {% block bootstrap3_title %}
@@ -18,7 +22,7 @@
 {% block bootstrap3_content %}
     {% if request.user.current_project %}
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container-fluid">
+            <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -72,11 +76,11 @@
                         <li></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
+            </div><!-- /.container -->
         </nav>
     {% else %}
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container-fluid">
+            <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">Reservoir</a>
@@ -86,9 +90,8 @@
     {% endif %}
 
     <!-- Content -->
-    <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
-        {% block content %}
-        {% endblock %}
+    <div class="container">
+        {% block content %}{% endblock %}
     </div>
 {% endblock %}
 
