@@ -1,9 +1,10 @@
 {% extends 'bootstrap3/bootstrap3.html' %}
+{% load static %}
 
 {% block bootstrap3_extra_head %}
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-    <link rel="stylesheet" href="static/bootstrap-social.css">
+    <link rel="stylesheet" href={% static "bootstrap-social.css" %}>
     <script src="https://use.fontawesome.com/0a95c18c65.js"></script>
     <style>
         body, h1, h2, h3, h4, h5, h6 {
@@ -24,51 +25,78 @@
 
 {% block bootstrap3_content %}
     {% if request.user.current_project %}
-        <!-- Sidebar (hidden by default) -->
-        <nav class="w3-sidebar w3-bar-block w3-card-2 w3-top w3-xlarge w3-animate-left"
-             style="display:none;z-index:2;width:40%;min-width:300px" id="baseSidebar">
-            <a href="javascript:void(0)" onclick="w3_close()"
-               class="w3-bar-item w3-button">Close</a>
-            <a class="w3-bar-item w3-button" href="{% url 'sheets:cost-list' %}">
-                Manage Costs
-            </a>
-            <a class="w3-bar-item w3-button" href="{% url 'reports:current-project-report' %}">
-                Project Report
-            </a>
-            <a class="w3-bar-item w3-button" href="{% url 'accounts:my-projects' %}">
-                Change Project
-            </a>
-            <a class="w3-bar-item w3-button"
-               href="{% url 'accounts:update-my-project' pk=request.user.current_project.id %}">
-                Manage Project
-            </a>
-            <a class="w3-bar-item w3-button"
-               href=" {% url 'accounts:delete-my-project' pk=request.user.current_project.id %}">
-                Delete Project
-            </a>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#base-navbar-collapse" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Reservoir</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="base-navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{% url 'sheets:add-costs' %}"><span class="glyphicon glyphicon-plus"></span> Add Cost</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">{{ request.user.current_project.name }} <span
+                                    class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'sheets:cost-list' %}">
+                                    <span class="glyphicon glyphicon-usd"></span> Costs
+                                </a></li>
+                                <li><a href="{% url 'reports:current-project-report' %}">
+                                    <span class="glyphicon glyphicon-stats"></span> Report
+                                </a></li>
+                                <li><a href="{% url 'accounts:update-my-project' pk=request.user.current_project.id %}">
+                                    <span class="glyphicon glyphicon-edit"></span> Edit
+                                </a></li>
+                                <li><a href="{% url 'accounts:delete-my-project' pk=request.user.current_project.id %}">
+                                    <span class="glyphicon glyphicon-trash"></span> Delete
+                                </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">Hi {{ request.user }} <span
+                                    class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'accounts:my-projects' %}">
+                                    <span class="glyphicon glyphicon-retweet"></span> Change Project
+                                </a></li>
+                                <li><a href="{% url 'logout' %}">
+                                    <span class="glyphicon glyphicon-log-out"></span> Logout
+                                </a></li>
+                            </ul>
+                        </li>
+                        <li></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
         </nav>
-
-        <!-- Top menu -->
-        <div class="w3-top">
-            <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
-                <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
-                <div class="w3-right w3-padding-16">
-                    <a class="w3-bar-item">Hi {{ request.user }}</a>
-                    <a class="w3-bar-item w3-button" href="{% url 'logout' %}">Logout</a>
-                </div>
-                <div class="w3-center w3-padding-16">
-                    <a class="w3-button" href="{% url 'index' %}">{{ request.user.current_project.name }}</a>
-                </div>
-            </div>
-        </div>
     {% else %}
-        <div class="w3-top">
-            <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
-                <div class="w3-center w3-padding-16">
-                    Reservoir
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#base-navbar-collapse" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Reservoir</a>
                 </div>
             </div>
-        </div>
+        </nav>
     {% endif %}
 
     <!-- Content -->
