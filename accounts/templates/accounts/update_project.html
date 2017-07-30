@@ -2,6 +2,12 @@
 {% load bootstrap3 %}
 {% block title %}Edit Project{% endblock %}
 {% block content %}
+    {% if is_updated %}
+        <p class="alert alert-success fade in alert-dismissable">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+            Success!
+        </p>
+    {% endif %}
     <h1>Invite link</h1>
     <a href={{ invite_link }}>{{ invite_link }}</a>
     <form action="" method="post">

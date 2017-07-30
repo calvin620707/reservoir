@@ -61,7 +61,8 @@ def update_project_view(request, pk):
     return render(request, 'accounts/update_project.html', {
         'project_form': project_form,
         'memberships_formset': memberships_formset,
-        'invite_link': invite_link
+        'invite_link': invite_link,
+        'is_updated': True if request.method == 'POST' else False
     })
 
 
