@@ -1,29 +1,30 @@
-{% extends base.html %}
+{% extends "base.html" %}
 {% load bootstrap3 %}
 {% block title %}Reservoir - Select Project{% endblock %}
+{% block content %}
+    <form action="{% url 'accounts:my-current-project' %}" method="post">
+        {% if object_list %}
+            {% csrf_token %}
+            <h1>Select Project</h1>
+            {% for project in object_list %}
+                <div class="radio">
+                    <p>
+                        <input type="radio" name="project_id" id="project{{ forloop.counter }}"
+                               value="{{ project.id }}"/>
+                        <label for="project{{ forloop.counter }}">{{ project.name }}</label>
+                    </p>
+                </div>
+            {% endfor %}
+            <button class="btn btn-primary">Select</button>
+        {% else %}
+            <p class="alert alert-warning fade in alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                You don't have any project yet.
+            </p>
+        {% endif %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Select Current Project</title>
-    <style>
-        th, td {
-            padding: 15px;
-        }
-    </style>
-</head>
-<body>
-<a href="{% url 'accounts:my-new-project' %}">Create New Project</a>
-<form action="{% url 'accounts:my-current-project' %}" method="post">
-    {% csrf_token %}
-    {% for project in object_list %}
-        <p>
-            <input type="radio" name="project_id" id="project{{ forloop.counter }}" value="{{ project.id }}"/>
-            <label for="project{{ forloop.counter }}">{{ project.name }}</label>
-        </p>
-    {% endfor %}
-    <input type="submit" value="Select"/>
-</form>
-</body>
-</html>
+        <a class="btn btn-default" href="{% url 'accounts:my-new-project' %}">
+            <span class="glyphicon glyphicon-plus"></span> Create New Project
+        </a>
+    </form>
+{% endblock %}
