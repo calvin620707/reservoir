@@ -106,4 +106,15 @@
             window.history.back();
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+    <script>
+        var clipboard = new Clipboard('[data-clipboard-btn]');
+        clipboard.on('success', function (e) {
+            console.log(e);
+        });
+        clipboard.on('error', function (e) {
+            console.log(e);
+        });
+    </script>
 {% endblock %}
