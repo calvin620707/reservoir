@@ -1,21 +1,20 @@
 {% extends "base.html" %}
 {% block title %}Manage Costs{% endblock %}
 {% block content %}
-    <a class="btn btn-default" href="{% url 'sheets:add-costs' %}">Add Another Cost</a>
-    <table>
+    <table class="table">
         <tr>
-            <th class="w3-xlarge">Date</th>
-            <th class="w3-xlarge">Name</th>
-            <th class="w3-xlarge">Cost</th>
-            <th class="w3-xlarge">Comment</th>
-            <th class="w3-xlarge">Options</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Comment</th>
+            <th>Options</th>
         </tr>
         {% for cost in object_list %}
             <tr>
-                <td class="w3-large">{{ cost.created_at }}</td>
-                <td class="w3-large">{{ cost.name }}</td>
-                <td class="w3-large">{{ cost.cost }}</td>
-                <td class="w3-large">{{ cost.comment }}</td>
+                <td>{{ cost.created_at }}</td>
+                <td>{{ cost.name }}</td>
+                <td>{{ cost.cost }}</td>
+                <td>{{ cost.comment }}</td>
 
                 <td>
                     <a class="btn btn-default" href="{% url 'sheets:update-cost' pk=cost.id %}">Edit</a>

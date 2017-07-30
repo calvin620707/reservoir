@@ -9,6 +9,6 @@
         {% csrf_token %}
         Are you sure you want to delete {{ object.name }}?
         {% bootstrap_button "Delete" button_type='submit' button_class='btn-danger'%}
-        <a class="btn btn-default" href="{% url 'sheets:cost-list' %}">Back</a>
+        <a class="btn btn-default" onclick="goBack()" ">Back</a>
     </form>
 {% endblock %}

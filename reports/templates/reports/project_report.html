@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 {% block title %}Project Report{% endblock %}
 {% block content %}
     <h2>Reports</h2>
     <p>Sum: {{ result.sum }}</p>
-    <table>
+    <table class="table">
         <thead>
         <tr>
             <th>User</th>
@@ -34,21 +35,21 @@
     {% else %}
         <h1>Calculated Costs</h1>
     {% endif %}
-    <table>
+    <table class="table">
         <tr>
-            <th class="w3-xlarge">Date</th>
-            <th class="w3-xlarge">Name</th>
-            <th class="w3-xlarge">Cost</th>
-            <th class="w3-xlarge">Comment</th>
-            <th class="w3-xlarge">Payer</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Comment</th>
+            <th>Payer</th>
         </tr>
         {% for cost in costs %}
             <tr>
-                <td class="w3-large">{{ cost.created_at }}</td>
-                <td class="w3-large">{{ cost.name }}</td>
-                <td class="w3-large">{{ cost.cost }}</td>
-                <td class="w3-large">{{ cost.comment }}</td>
-                <td class="w3-large">{{ cost.payer }}</td>
+                <td>{{ cost.created_at }}</td>
+                <td>{{ cost.name }}</td>
+                <td>{{ cost.cost }}</td>
+                <td>{{ cost.comment }}</td>
+                <td>{{ cost.payer }}</td>
             </tr>
         {% endfor %}
     </table>
@@ -59,8 +60,8 @@
                 <input type="hidden" name="cost_ids" value="{{ cost.id }}">
             {% endfor %}
 
-            <input class="w3-button w3-xlarge" type="submit" value="Confirm">
-            <a class="w3-button w3-xlarge" href="{% url 'sheets:cost-list' %}">No</a>
+            {% bootstrap_button "Confirm" button_type='submit' button_class='btn-primary'%}
+            <a class="btn btn-default" onclick="goBack()">Back</a>
         </form>
     {% else %}
         <a class="w3-button" href="{% url 'sheets:add-costs' %}">Back</a>
