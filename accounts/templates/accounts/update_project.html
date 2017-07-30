@@ -1,20 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Update Project{% endblock %}
+{% load bootstrap3 %}
+{% block title %}Edit Project{% endblock %}
 {% block content %}
     <h1>Invite link</h1>
     <a href={{ invite_link }}>{{ invite_link }}</a>
     <form action="" method="post">
         {% csrf_token %}
         <h1>Project</h1>
-        {{ project_form.as_p }}
-        <input class="w3-button w3-xlarge" type="submit" value="Save"/>
+        {% bootstrap_form project_form %}
+        {% buttons submit='Save' %}{% endbuttons %}
         <h1>Members Responsibilities</h1>
         {% for error in memberships_formset.non_form_errors %}
             {{ error }}
         {% endfor %}
-        <table>
+        <table class="table">
             {{ memberships_formset.as_table }}
         </table>
-        <input class="w3-button w3-xlarge" type="submit" value="Save"/>
+        {% buttons submit='Save' %}{% endbuttons %}
     </form>
 {% endblock %}
