@@ -7,7 +7,11 @@
 {% block content %}
     <form action="" method="post">
         {% csrf_token %}
-        Are you sure you want to delete {{ object.name }}?
+        <div class="panel panel-danger">
+            <div class="panel-body bg-danger">
+                Are you sure you want to delete {{ object.name }}?
+            </div>
+        </div>
         {% bootstrap_button "Delete" button_type='submit' button_class='btn-danger'%}
         <a class="btn btn-default" onclick="goBack()" ">Back</a>
     </form>
