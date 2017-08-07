@@ -9,9 +9,9 @@
             {% for project in object_list %}
                 <div class="radio">
                     <p>
-                        <input type="radio" name="project_id" id="project{{ forloop.counter }}"
-                               value="{{ project.id }}"/>
-                        <label for="project{{ forloop.counter }}">{{ project.name }}</label>
+                        <label>
+                            <input type="radio" name="project_id" value="{{ project.id }}"/>{{ project.name }}
+                        </label>
                     </p>
                 </div>
             {% endfor %}
